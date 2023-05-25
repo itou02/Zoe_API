@@ -45,7 +45,6 @@ class MessageController extends Controller
     {
         $message = Message::findOrFail($id);
         $message->delete();
-
         return response()->json(null, 204);
     }
 }
