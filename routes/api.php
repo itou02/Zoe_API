@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\LoginController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('register', [RegisterController::class, 'register']);
+Route::post('register', [RegisteredUserController::class, 'register']);
 Route::post('login', [LoginController::class, 'login']);
 
 // Route::middleware('auth:api')->group(function () {

@@ -13,24 +13,26 @@ class RegisteredUserController extends Controller
 {
 
 
-public function register(Request $request)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-    ]);
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Password::defaults()],
 
-    $user = User::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'password' => Hash::make($validatedData['password']),
-    ]);
+            // 'password' => 'required|string|min:6|confirmed',
+        ]);
 
-    $token = Auth::guard('api')->login($user);
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
 
-    return $this->respondWithToken($token);
-}
+        $token = Auth::guard('api')->login($user);
+
+        return $this->respondWithToken($token);
+    }
 
     public function store(Request $request)
     {
