@@ -21,7 +21,11 @@ class LoginController extends Controller
         }
 
         $token = Auth::guard('api')->attempt($credentials);
+        $response = [
+            'user' => $credentials['email'],
+            'token' => $token,
+        ];
 
-        return $this->respondWithToken($token);
+        return $this->respondWithToken($response);
     }
 }
